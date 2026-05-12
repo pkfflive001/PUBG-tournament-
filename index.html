@@ -1,0 +1,602 @@
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>HAMMAD PUBG TOURNAMENT</title>  <link rel="stylesheet"  
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>  <style>  
+  
+*{  
+margin:0;  
+padding:0;  
+box-sizing:border-box;  
+font-family:Segoe UI;  
+}  
+  
+body{  
+background:#0d1117;  
+color:white;  
+padding-bottom:80px;  
+}  
+  
+.header{  
+background:#161b22;  
+padding:15px;  
+display:flex;  
+justify-content:space-between;  
+align-items:center;  
+position:sticky;  
+top:0;  
+z-index:100;  
+}  
+  
+.logo{  
+font-size:28px;  
+font-weight:bold;  
+color:#ffcc00;  
+}  
+  
+.container{  
+padding:15px;  
+}  
+  
+.card{  
+background:#1f2937;  
+padding:15px;  
+border-radius:20px;  
+margin-top:15px;  
+}  
+  
+.banner{  
+width:100%;  
+height:220px;  
+object-fit:cover;  
+border-radius:20px;  
+}  
+  
+.title{  
+font-size:30px;  
+font-weight:bold;  
+text-align:center;  
+margin-top:15px;  
+color:#ffcc00;  
+}  
+  
+.subtitle{  
+text-align:center;  
+margin-top:10px;  
+opacity:.9;  
+}  
+  
+.btn{  
+width:100%;  
+padding:14px;  
+border:none;  
+border-radius:14px;  
+font-size:16px;  
+font-weight:bold;  
+margin-top:14px;  
+cursor:pointer;  
+}  
+  
+.green{  
+background:#00cc44;  
+color:white;  
+}  
+  
+.red{  
+background:#ff4444;  
+color:white;  
+}  
+  
+.gray{  
+background:#444;  
+color:white;  
+}  
+  
+input{  
+width:100%;  
+padding:13px;  
+margin-top:12px;  
+background:#111827;  
+border:1px solid #333;  
+border-radius:12px;  
+color:white;  
+font-size:16px;  
+}  
+  
+.modal{  
+display:none;  
+position:fixed;  
+top:0;  
+left:0;  
+width:100%;  
+height:100%;  
+background:rgba(0,0,0,.9);  
+justify-content:center;  
+align-items:center;  
+padding:10px;  
+z-index:999;  
+}  
+  
+.modal-box{  
+background:#1f2937;  
+padding:20px;  
+border-radius:20px;  
+width:100%;  
+max-width:420px;  
+max-height:90vh;  
+overflow:auto;  
+}  
+  
+.paymentBox{  
+background:#111827;  
+padding:15px;  
+border-radius:15px;  
+margin-top:15px;  
+text-align:center;  
+border:2px solid #00cc44;  
+}  
+  
+.bigNumber{  
+font-size:30px;  
+font-weight:bold;  
+color:#00ff88;  
+margin-top:10px;  
+}  
+  
+.player{  
+background:#111827;  
+padding:12px;  
+border-radius:12px;  
+margin-top:12px;  
+}  
+  
+.approved{  
+color:#00ff88;  
+font-weight:bold;  
+}  
+  
+.pending{  
+color:orange;  
+font-weight:bold;  
+}  
+  
+.rejected{  
+color:red;  
+font-weight:bold;  
+}  
+  
+.bottomNav{  
+position:fixed;  
+bottom:0;  
+left:0;  
+width:100%;  
+background:#161b22;  
+display:flex;  
+justify-content:space-around;  
+padding:12px 0;  
+}  
+  
+.navItem{  
+text-align:center;  
+font-size:14px;  
+cursor:pointer;  
+}  
+  
+.navItem i{  
+display:block;  
+font-size:22px;  
+margin-bottom:5px;  
+color:#00ff88;  
+}  
+  
+.roomCard{  
+background:#111827;  
+padding:15px;  
+border-radius:15px;  
+margin-top:15px;  
+border:2px solid #00cc44;  
+}  
+  
+</style>  </head>  <body>  <div class="header">  <div class="logo">  
+HAMMAD  
+</div>  <div   
+onclick="openAdmin()"  
+style="font-size:24px;cursor:pointer;">  
+👑  
+</div>  </div>  <div class="container">  <div class="card">  <img   
+class="banner"  
+src="https://images.unsplash.com/photo-1542751110-97427bbecf20?q=80&w=1200&auto=format&fit=crop">
+
+<div class="title">  
+PUBG MOBILE TOURNAMENT  
+</div>  <div class="subtitle">  
+Squad Match • Erangel • Entry Fee Rs 20  
+</div>  <button   
+class="btn green"  
+onclick="joinNow()">
+JOIN TOURNAMENT
+</button>
+
+</div>  </div>  <!-- JOIN MODAL -->  <div class="modal" id="joinModal">  <div class="modal-box">  <h2>Join PUBG Tournament</h2>  <input   
+type="text"  
+id="pubgName"  
+placeholder="PUBG Game Name">
+
+<input   
+type="text"  
+id="senderName"  
+placeholder="JazzCash Sender Name">
+
+<div class="paymentBox">  <h3>Send Payment On JazzCash</h3>  <div class="bigNumber">  
+03245150474  
+</div>  <p style="margin-top:10px;">  
+Entry Fee: Rs 20  
+</p>  </div>  <button   
+class="btn green"  
+onclick="submitPlayer()">
+SUBMIT PAYMENT
+</button>
+
+<button   
+class="btn gray"  
+onclick="closeModal('joinModal')">
+CLOSE
+</button>
+
+</div>  </div>  <!-- ADMIN MODAL -->  <div class="modal" id="adminModal">  <div class="modal-box">  <div id="loginBox">  <h2>Admin Login</h2>  <input   
+type="password"  
+id="adminPass"  
+placeholder="Enter Password">
+
+<button   
+class="btn green"  
+onclick="adminLogin()">
+LOGIN
+</button>
+
+</div>  <div id="adminPanel" style="display:none;">  <h2>👑 ADMIN PANEL</h2>  <input   
+type="text"  
+id="roomIDInput"  
+placeholder="Room ID">
+
+<input   
+type="text"  
+id="roomPassInput"  
+placeholder="Room Password">
+
+<button   
+class="btn green"  
+onclick="saveRoom()">
+SAVE ROOM
+</button>
+
+<h3 style="margin-top:20px;">  
+Player Payments  
+</h3>  <div id="players"></div>  </div>  <button   
+class="btn red"  
+onclick="closeModal('adminModal')">
+CLOSE
+</button>
+
+</div>  </div>  <!-- PROFILE MODAL -->  <div class="modal" id="profileModal">  <div class="modal-box">  <h2>PLAYER PROFILE</h2>  <div id="profileContent">  <p>No Tournament Joined Yet</p>  </div>  <button   
+class="btn gray"  
+onclick="closeModal('profileModal')">
+CLOSE
+</button>
+
+</div>  </div>  <!-- BOTTOM NAV -->  <div class="bottomNav">  <div class="navItem">  
+<i class="fa-solid fa-house"></i>  
+Home  
+</div>  <div   
+class="navItem"  
+onclick="openProfile()">  <i class="fa-solid fa-user"></i>
+Profile
+
+</div>  </div>  <script>  
+  
+let players =  
+JSON.parse(localStorage.getItem("pubgPlayers")) || [];  
+  
+let room =  
+JSON.parse(localStorage.getItem("pubgRoom")) || {  
+id:"",  
+pass:""  
+};  
+  
+function joinNow(){  
+  
+document.getElementById("joinModal")  
+.style.display="flex";  
+  
+}  
+  
+function closeModal(id){  
+  
+document.getElementById(id)  
+.style.display="none";  
+  
+}  
+  
+function submitPlayer(){  
+  
+let name =  
+document.getElementById("pubgName")  
+.value.trim();  
+  
+let sender =  
+document.getElementById("senderName")  
+.value.trim();  
+  
+if(!name || !sender){  
+  
+alert("Fill all fields");  
+  
+return;  
+  
+}  
+  
+let player = {  
+  
+name:name,  
+sender:sender,  
+status:"Pending"  
+  
+};  
+  
+players.push(player);  
+  
+localStorage.setItem(  
+"pubgPlayers",  
+JSON.stringify(players)  
+);  
+  
+localStorage.setItem(  
+"currentPlayer",  
+JSON.stringify(player)  
+);  
+  
+alert("Payment Submitted");  
+  
+closeModal("joinModal");  
+  
+}  
+  
+function openAdmin(){  
+  
+document.getElementById("adminModal")  
+.style.display="flex";  
+  
+}  
+  
+function adminLogin(){  
+  
+let pass =  
+document.getElementById("adminPass")  
+.value;  
+  
+if(pass==="admin786"){  
+  
+document.getElementById("loginBox")  
+.style.display="none";  
+  
+document.getElementById("adminPanel")  
+.style.display="block";  
+  
+renderPlayers();  
+  
+}else{  
+  
+alert("Wrong Password");  
+  
+}  
+  
+}  
+  
+function renderPlayers(){  
+  
+let box =  
+document.getElementById("players");  
+  
+box.innerHTML="";  
+  
+if(players.length===0){  
+  
+box.innerHTML =  
+"<p>No Players Yet</p>";  
+  
+return;  
+  
+}  
+  
+players.forEach((p,index)=>{  
+  
+box.innerHTML += `  
+  
+<div class="player">  
+  
+<h3>${p.name}</h3>  
+  
+<p>  
+Sender:  
+<b>${p.sender}</b>  
+</p>  
+  
+<p class="${  
+p.status==="Approved"  
+?  
+"approved"  
+:  
+p.status==="Rejected"  
+?  
+"rejected"  
+:  
+"pending"  
+}">  
+${p.status}  
+</p>  
+  
+<button   
+class="btn green"  
+onclick="approve(${index})">  
+APPROVE  
+</button>  
+  
+<button   
+class="btn red"  
+onclick="rejectPlayer(${index})">  
+REJECT  
+</button>  
+  
+</div>  
+  
+`;  
+  
+});  
+  
+}  
+  
+function approve(index){  
+  
+players[index].status="Approved";  
+  
+localStorage.setItem(  
+"pubgPlayers",  
+JSON.stringify(players)  
+);  
+  
+renderPlayers();  
+  
+alert("Player Approved");  
+  
+}  
+  
+function rejectPlayer(index){  
+  
+players[index].status="Rejected";  
+  
+localStorage.setItem(  
+"pubgPlayers",  
+JSON.stringify(players)  
+);  
+  
+renderPlayers();  
+  
+alert("Player Rejected");  
+  
+}  
+  
+function saveRoom(){  
+  
+room.id =  
+document.getElementById("roomIDInput")  
+.value;  
+  
+room.pass =  
+document.getElementById("roomPassInput")  
+.value;  
+  
+localStorage.setItem(  
+"pubgRoom",  
+JSON.stringify(room)  
+);  
+  
+alert("Room Saved");  
+  
+}  
+  
+function openProfile(){  
+  
+document.getElementById("profileModal")  
+.style.display="flex";  
+  
+let current =  
+JSON.parse(  
+localStorage.getItem("currentPlayer")  
+);  
+  
+if(!current){  
+  
+document.getElementById("profileContent")  
+.innerHTML =  
+"<p>No Tournament Joined Yet</p>";  
+  
+return;  
+  
+}  
+  
+let found =  
+players.find(  
+p =>  
+p.name===current.name &&  
+p.sender===current.sender  
+);  
+  
+if(!found){  
+  
+document.getElementById("profileContent")  
+.innerHTML =  
+"<p>Player Not Found</p>";  
+  
+return;  
+  
+}  
+  
+if(found.status==="Approved"){  
+  
+document.getElementById("profileContent")  
+.innerHTML = `  
+  
+<div class="roomCard">  
+  
+<h3 style="color:#00ff88;">  
+✅ Payment Approved  
+</h3>  
+  
+<p style="margin-top:10px;">  
+ROOM ID:  
+<b>${room.id}</b>  
+</p>  
+  
+<p style="margin-top:10px;">  
+PASSWORD:  
+<b>${room.pass}</b>  
+</p>  
+  
+</div>  
+  
+`;  
+  
+}else if(found.status==="Rejected"){  
+  
+document.getElementById("profileContent")  
+.innerHTML = `  
+  
+<p class="rejected">  
+❌ Payment Rejected  
+</p>  
+  
+`;  
+  
+}else{  
+  
+document.getElementById("profileContent")  
+.innerHTML = `  
+  
+<p class="pending">  
+⏳ Payment Pending Approval  
+</p>  
+  
+<p style="margin-top:10px;">  
+Wait for admin approval.  
+</p>  
+  
+`;  
+  
+}  
+  
+}  
+  
+</script>  </body>  
+</html>  
+Iskay ander admin may time date schedule add karo
